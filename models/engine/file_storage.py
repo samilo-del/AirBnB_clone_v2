@@ -9,6 +9,7 @@ from models.place import Place
 from models.city import City
 from models.user import User
 
+
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'

@@ -113,28 +113,40 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
+    def do_create(self, agrs):
+        """Creates a new instance of BaseModel, saves it
+        Exceptions:
+            SyntaxError: when there is no args given
+            NameError: when there is no object taht has the name
+        """
+        try:
+            if not line:
+                raise SyntaxError()
+            my_list = line.split(" ")
+            obj = eval("{}()".format(my_list[0]))
+            for i in my_list:
+                if i != my_list[0]:
+                    try:
+                        check = i.split("=")
+                        if (type(eval(check[1])) is str):
+                            check[1] = str(check[1])
+                            check[1] = check[1][1:]
+                            check[1] = check[1][:-1]
+                            check[1] = check[1].replace("_", " ")
+                            check[1] = check[1].replace('"', '\\"')
+                        elif (type(eval(check[1])) is float):
+                            check[1] = float(check[1])
+                        elif (type(eval(check[1])) is int):
+                            check[1] = int(check[1])
+                        setattr(obj, check[0], check[1])
+                    except Exception:
+                        pass
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
             print("** class name missing **")
-            return
-        elif args not in HBNBCommand.classes:
+        except NameError:
             print("** class doesn't exist **")
-            '''return'''
-
-        spl = args.split(" ")
-        classname = spl[0]
-        dict_ = {}
-        """print(args)"""
-        for value in args[1:]:
-            obj = eval("{}()".format(classname))    
-            dict_[classname] = spl
-        """print(obj, end="")"""
-            
-         
-        new_instance = HBNBCommand.classes[args[0]](**dict_)
-        print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
