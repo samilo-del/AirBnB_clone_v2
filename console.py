@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """ Console Module """
 import cmd
 import sys
@@ -113,35 +114,40 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
+    def do_create(self, line):
         """Creates a new instance of BaseModel, saves it
         Exceptions:
             SyntaxError: when there is no args given
             NameError: when there is no object taht has the name
         """
-        if not args:
+        try:
+            if not line:
+                raise SyntaxError()
+            my_list = line.split(" ")
+            obj = eval("{}()".format(my_list[0]))
+            for i in my_list:
+                if i != my_list[0]:
+                    try:
+                        check = i.split("=")
+                        if (type(eval(check[1])) is str):
+                            check[1] = str(check[1])
+                            check[1] = check[1][1:]
+                            check[1] = check[1][:-1]
+                            check[1] = check[1].replace("_", " ")
+                            check[1] = check[1].replace('"', '\\"')
+                        elif (type(eval(check[1])) is float):
+                            check[1] = float(check[1])
+                        elif (type(eval(check[1])) is int):
+                            check[1] = int(check[1])
+                        setattr(obj, check[0], check[1])
+                    except Exception:
+                        pass
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
             print("** class name missing **")
-            return
-
-        args = args.split()
-
-        if args[0] not in HBNBCommand.classes:
+        except NameError:
             print("** class doesn't exist **")
-            return
-        dict_ = {}
-        for value in args[1:]:
-            spl = value.split("=")
-            spl1_ = spl[0]
-            spl2_ = spl[1].replace('"', '').replace('_', ' ')
-
-            if value.split in HBNBCommand.types.keys():
-                dict_[spl2_] = HBNBCommand.types[spl1_](spl2_)
-            else:
-                dict_[spl1_] = spl2_
-
-        new_instance = HBNBCommand.classes[args[0]](**dict_)
-        new_instance.save()
-        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
@@ -337,5 +343,5 @@ class HBNBCommand(cmd.Cmd):
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     HBNBCommand().cmdloop()
