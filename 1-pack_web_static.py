@@ -13,8 +13,8 @@ def do_pack():
         if not os.path.exists("versions"):
             os.mkdir("versions")
 
-        f1le = "versions/web_static_{}.tgz".format(forma)
-        local("tar -cvzf {} web_static".format(file_))
+        f1le = "versions/web_static_{}.tgz".format(form)
+        local("tar -cvzf {} web_static".format(f1le))
         return f1le
     except:
         return(None)
