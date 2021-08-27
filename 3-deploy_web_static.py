@@ -11,15 +11,15 @@ env.hosts = ["34.139.181.5", "3.87.76.93"]
 def do_pack():
     """ ... """
     try:
-        date = datetime.now().strftime("%Y%m%d%H%M%S")
+        form = datetime.now().strftime("%Y%m%d%H%M%S")
 
         if not os.path.exists("versions"):
             os.mkdir("versions")
 
-        file_ = "versions/web_static_{}.tgz".format(date)
-        local("tar -cvzf {} web_static".format(file_))
+        f1le = "versions/web_static_{}.tgz".format(form)
+        local("tar -cvzf {} web_static".format(f1le))
 
-        return file_
+        return f1le
     except:
         return(None)
 
