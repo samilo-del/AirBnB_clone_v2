@@ -27,9 +27,8 @@ def text(text):
 @app.route('/python/<text>', strict_slashes=False)
 def fun_python(text='is cool'):
     """text display Python"""
-     return ('Python ' + text.replace('_', ' '))
+    return ('Python ' + text.replace('_', ' '))
 
 if __name__ == '__main__':
     """main"""
     app.run(host='0.0.0.0', port=5000)
-
