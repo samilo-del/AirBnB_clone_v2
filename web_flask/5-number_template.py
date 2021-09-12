@@ -34,7 +34,7 @@ def fun_python(text='is cool'):
 @app.route('/number/<int:n>', strict_slashes=False)
 def fun_number(n):
     """display “n is a number” only if n is an integer"""
-    return '{d} is a number'.format(n)
+    return '{:d} is a number'.format(n)
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
