@@ -38,10 +38,10 @@ def fun_number(n):
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
-def fun_template(n):
+def fun_template(num):
     """template"""
-    if type(n) == int:
-        return render_template("5-number.html", n=n)
+    if type(num) == int:
+        return render_template("5-number.html", n=num)
 
 if __name__ == '__main__':
     """main"""
